@@ -2,6 +2,8 @@ import tensorflow as tf
 import numpy as np
 import input_data
 
+VERSION = "0.0.1"
+
 def make_model(X, W, b):
     return tf.matmul(X, W) + b
 
@@ -42,8 +44,8 @@ with tf.Session() as sess:
     save_dir = 'save_files'
     if not os.path.isdir(save_dir):
         os.mkdir(save_dir)
-    model_save_path = "{0}/{1}.ckpt".format(save_dir, os.path.basename(__file__))
-    info_file_path = "{0}/{1}.info".format(save_dir, os.path.basename(__file__))
+    model_save_path = "{0}/{1}.{2}.ckpt".format(save_dir, os.path.basename(__file__), VERSION)
+    info_file_path = "{0}/{1}.{2}.info".format(save_dir, os.path.basename(__file__), VERSION)
     try:
         epochs = []
         avg_costs = []
