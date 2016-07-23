@@ -102,7 +102,7 @@ with tf.Session() as sess:
         Training and Testing Model
     """
     DISPLAY_SAVE_STEP = 1
-    TRAINING_EPOCHS = 50
+    TRAINING_EPOCHS = 100
     BATCH_SIZE = 2048
 
     def do_train():
@@ -152,7 +152,7 @@ with tf.Session() as sess:
         avg_cost = do_train()
 
         # Logging the result
-        if epoch % DISPLAY_SAVE_STEP == 0 or epoch == TRAINING_EPOCHS:
+        if epoch % DISPLAY_SAVE_STEP == start_epoch % DISPLAY_SAVE_STEP or epoch == TRAINING_EPOCHS:
             avg_accuracy = do_test()
             do_save()
 
