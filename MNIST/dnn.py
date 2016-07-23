@@ -2,7 +2,8 @@ import tensorflow as tf
 import numpy as np
 import input_data
 
-VERSION = "adam.dropout0.7.L6.0.1"
+#VERSION = "adam.dropout0.7.L6.0.1" # overshooting
+VERSION = "adam0.001.dropout0.7.L6.0.1"
 
 initializer = tf.contrib.layers.xavier_initializer()
 
@@ -55,7 +56,7 @@ model_with_softmax = tf.nn.softmax(model)
 # cross entropy
 cost = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(model, Y))
 
-f_learning_rate = 0.01
+f_learning_rate = 0.001
 learning_rate = tf.Variable(f_learning_rate)
 optimizer = tf.train.AdamOptimizer(learning_rate)
 train = optimizer.minimize(cost)
@@ -106,7 +107,9 @@ with tf.Session() as sess:
             print("continue...")
             print("[*] Start a training from the save file.")
             start_epoch = epochs[-1] + 1
-            for epoch, avg_cost, learning_rate in zip(epochs, avg_costs, learning_rates):
+            for no, epoch, avg_cost, learning_rate in zip(range(len(epochs)), epochs, avg_costs, learning_rates):
+                if no % display_save_step != 0 and no != len(epochs) - 1:
+                    continue
                 print("Epoch {0} with learning rate = {1} : avg_cost = {2}".
                       format(epoch, learning_rate, avg_cost))
 
